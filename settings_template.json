@@ -1,0 +1,24 @@
+{
+   "SENSORS":[
+      1,
+      2,
+      3
+   ],
+   "APPEUI_SET":0,
+   "APPKEY_SET":0,
+   "APPEUI":"<YOUR_LORAWAN_APPEUI>",
+   "LOG_ON":1,
+   "E5_LOWPOWER":1,
+   "BLE_WUS":50000,
+   "BLE_IUS":50000,
+   "E5_CONFIGURED":1,
+   "BLE_TO":7500,
+   "WDT_ON":1,
+   "SLEEPTIME":3600000,
+   "APPKEY":"<YOUR_LORAWAN_APPKEY>",
+   "WDT_TO":180000,
+   "TAGS":[
+	"<outdoor ruuvitag mac eg. ed087012559d)>",
+	"<indoor ruuvitag mac eg. ed087012559d>"
+   ]
+}
