@@ -7,8 +7,10 @@ https://lapinamk.fi/hanke/kuituhamppu-kayttoon/
 # tequ-iot-soil-moisture-esp32
 Soil moisture measurement system. Collects data from Ruuvitag sensors and DFRobot soil moisture sensors. In this project system is used to measure biomass temperature and moisture from three different locations (bottom, middle and top). Biomass is located in compost unit. Ruuvitag sensors are used to measure outdoor and indoor temperature and relative humidity.
 
+System is designed to work multiple years without need to change batteries.
+
 ## Hardware
-Hardware components are placed inside 3D-printed enclosure. User and power LEDs of main board are routed into enclosure cover using fiber optic tubes. 
+Hardware components are placed industrial IP68 rated enclosure. 
 
 | Hardware               | Model         | Placement       | Link          |
 | -------------          |:-------------:| :-------------: | :-------------:|
