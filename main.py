@@ -21,8 +21,8 @@ if cfg.WDT_ON:
 log.info("Boot - Program starting after %s" % e32.check_reset_cause())
 
 try:
-    log.info("Main - Soil moisture app version [2024-11-15] starting...")
-    e32.blink_user_led(0.050,5)
+    log.info("Main - Soil moisture app version [2024-11-25] starting...")
+    e32.blink_user_led(0.050,1)
     
     results = bt.ble_scan()
     print(results)
@@ -61,26 +61,25 @@ try:
        
     if joined:
         log.info("Joining to LoRaWAN network...OK")
-        payload_data = "1"
+        dp_id = e32.packId(9)
+        import random
+        out_t = e32.packTemperature(random.randrange(-40,80))
+        out_rh = e32.packHumidity(random.randrange(0,100))
+        out_bat = e32.packBatteryVoltage(random.randrange(2000,3500))
+        in_t = e32.packTemperature(random.randrange(-40,80))
+        in_rh = e32.packHumidity(random.randrange(0,100))
+        in_bat = e32.packBatteryVoltage(random.randrange(2000,3500))
+        soil_t1 = e32.packTemperature(random.randrange(-40,80))
+        soil_rh1 = e32.packHumidity(random.randrange(0,100))
+        soil_t2 = e32.packTemperature(random.randrange(-40,80))
+        soil_rh2 = e32.packHumidity(random.randrange(0,100))
+        soil_t3 = e32.packTemperature(random.randrange(-40,80))
+        soil_rh3 =  e32.packHumidity(random.randrange(0,100))
         
-        outdoor_t = e32.packTemperature(-5.4)
-        outdoor_rh = packHumidity(78.3)
-        outdoor_bat = packBatteryVoltage(2.634)
-        indoor_t = e32.packTemperature(-3.2)
-        indoor_rh = packHumidity(80.4)
-        indoor_bat = packBatteryVoltage(2.834)
-        soil_t1 = e32.packTemperature(21.4)
-        soil_rh1 = packHumidity(45.2)
-        soil_t2 = e32.packTemperature(14.2)
-        soil_rh2 = packHumidity(34.2)
-        soil_t3 = e32.packTemperature(10.33)
-        soil_rh3 =  packHumidity(24.32)
+        payload_bytes = dp_id+out_t+out_rh+out_bat+in_t+in_rh+in_bat+soil_t1+soil_rh1+soil_t2+soil_rh2+soil_t3+soil_rh3
+        payload_hex = payload_bytes.hex()
         
-        binaryData = outdoor_t
-        
-        
-        
-        resp = e5.send_data(payload_data)
+        resp = e5.send_data(payload_hex)
         if resp:
             log.info("Sending data...OK")
         else:
@@ -93,7 +92,7 @@ try:
     log.info("Executing program took %.3f s" % diff)
 except Exception as e:
     log.error("Main - Exception",e)
-    e32.blink_user_led(0.050,5)
+    e32.blink_user_led(0.100,1)
     utime.sleep(5)
 finally:
     wdt.feed()
@@ -102,4 +101,4 @@ finally:
     e5.set_auto_lowpower()
     utime.sleep(5)
     log.info("Go to deepsleep for %d seconds..." % cfg.SLEEPTIME)
-    #deepsleep(cfg.SLEEPTIME )
+    deepsleep(cfg.SLEEPTIME )

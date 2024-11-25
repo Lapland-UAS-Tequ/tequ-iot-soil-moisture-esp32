@@ -20,8 +20,6 @@ class Config:
         self.TAGS = []
         self.APPEUI = ""
         self.APPKEY = ""
-        self.APPKEY_SET = 0
-        self.APPEUI_SET = 0
         self.E5_LOWPOWER = 0
         self.E5_CONFIGURED = 0
         self.SENSORS = [1,2,3]
@@ -46,8 +44,6 @@ class Config:
             self.TAGS = settings["TAGS"]
             self.APPEUI = settings["APPEUI"]
             self.APPKEY = settings["APPKEY"]
-            self.APPKEY_SET = settings["APPKEY_SET"]
-            self.APPEUI_SET = settings["APPEUI_SET"]
             self.E5_LOWPOWER = settings["E5_LOWPOWER"]
             self.E5_CONFIGURED = settings["E5_CONFIGURED"]
             self.SENSORS = settings["SENSORS"]
@@ -76,8 +72,6 @@ class Config:
             settings["TAGS"] = self.TAGS
             settings["APPEUI"] = self.APPEUI
             settings["APPKEY"] = self.APPKEY
-            settings["APPEUI_SET"] = self.APPEUI_SET
-            settings["APPKEY_SET"] = self.APPKEY_SET
             settings["E5_LOWPOWER"] = self.E5_LOWPOWER
             settings["E5_CONFIGURED"] = self.E5_CONFIGURED
             settings["SENSORS"] = self.SENSORS
@@ -117,8 +111,6 @@ class Config:
             "TAGS":{"type":"text"},
             "APPEUI":{"type":"text"},
             "APPKEY":{"type":"text"},
-            "APPEUI_SET":{"type":"enum","allowed":[0,1],"default":0},
-            "APPKEY_SET":{"type":"enum","allowed":[0,1],"default":0},
             "E5_LOWPOWER":{"type":"enum","allowed":[0,1],"default":0},
             "E5_CONFIGURED":{"type":"enum","allowed":[0,1],"default":0},
             "SENSORS":{"type":"text"}

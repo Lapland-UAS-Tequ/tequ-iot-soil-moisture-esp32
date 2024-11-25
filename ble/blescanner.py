@@ -20,7 +20,7 @@ class BLEScanner:
             macAddr = bytes(addr).hex()
 
             if macAddr in cfg.TAGS:
-                print("RUUVITAG FOUND!")
+                #print("RUUVITAG FOUND!")
                 payload = bytes(adv_data)
                 dataFormat = adv_data[7]
                 if not macAddr in self.results:
@@ -30,14 +30,6 @@ class BLEScanner:
                         "humidity": ruuviTagData[1],
                         "battery_voltage": ruuviTagData[7] / 1000
                     }
-                    
-                                      
-            #if macAddr in cfg.TAGS:
-            #    result = decode_data(bytes(adv_data), addr, rssi, adv_type ,addr_type)
-            #    print(result)
-            #if result is not None:                     
-            #    self.results[result['device_id']] = result
-                
     def enable_ble(self):
         if not self.ble.active():
             self.ble.active(True)

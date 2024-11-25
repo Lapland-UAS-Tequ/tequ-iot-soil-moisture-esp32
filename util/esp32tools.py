@@ -86,6 +86,9 @@ class ESP32Tools:
     def pwr_control(self,value):
         self.pwr_led(value)           
         
+    def packBatteryVoltage(self, value):
+        #Map battery voltage 2000-3500 to range 0-255 with offset
+        return pack("B",int((value-2000)/(1500/255)))
     
     def packTemperature(self, value):
         #Pack temperature to range -32768...+32767
@@ -95,3 +98,8 @@ class ESP32Tools:
         #Map humidity 0-100 to range 0-255
         return pack("H",int(value*100))
     
+    def packId(self,value):
+        return pack("B",int(value))
+
+    
+

@@ -20,7 +20,6 @@ class Serial:
 
     def __init__(self, uart_id, baudrate=9600, data_bits=8, stop_bits=1, parity=None, tx=None, rx=None, ctrl_pin=None):
         self._uart = UART(uart_id, baudrate=baudrate, bits=data_bits, parity=parity, stop=stop_bits, tx=tx, rx=rx)
-        print(self._uart)
         if ctrl_pin is not None:
             self._ctrlPin = Pin(ctrl_pin, mode=Pin.OUT)
         else:
