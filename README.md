@@ -7,6 +7,8 @@ https://lapinamk.fi/hanke/kuituhamppu-kayttoon/
 # tequ-iot-soil-moisture-esp32
 Soil moisture measurement system. Collects data from Ruuvitag sensors and DFRobot soil moisture sensors. In this project system is used to measure biomass temperature and moisture from three different locations (bottom, middle and top). Biomass is located in compost unit. Ruuvitag sensors are used to measure outdoor and indoor temperature and relative humidity.
 
+System can send data to cloud using wifi connection or LoRaWAN.
+
 System is designed to work multiple years without need to change batteries.
 
 ## Hardware
@@ -15,13 +17,15 @@ Hardware components are placed industrial IP68 rated enclosure.
 | Hardware               | Model         | Placement       | Link          |
 | -------------          |:-------------:| :-------------: | :-------------:|
 | Main board             | Seeed XIAO ESP32S3|  Enclosure     | <a href="https://docs.sixfab.com/docs/sixfab-pico-lte-introduction">Link</a>|
-| LoRaWAN module         | Grove Wio-E5      |     | <a href="https://wiki.seeedstudio.com/Grove_LoRa_E5_New_Version">Link</a>|
+| LoRaWAN module*        | Grove Wio-E5      |     | <a href="https://wiki.seeedstudio.com/Grove_LoRa_E5_New_Version">Link</a>|
 | RS485 Module           | Grove - RS485     |    | <a href="https://wiki.seeedstudio.com/Grove-RS485">Link</a>|
 | DC/DC module           | Adafruit       |       | <a href="">Link</a>|
 | Battery pack           | 3x1.5 AA          |    | <a href="">Link</a>|
 | Outdoor sensor         |         |    | <a href="">Link</a>|
 | Indoor sensor          |         |    | <a href="">Link</a>|
 | Soil moisture sensor   |         |    | <a href="">Link</a>|
+
+* LoRAWAN module is optional.
 
 ## Connections
 Connections of the hardware used in prototype.
