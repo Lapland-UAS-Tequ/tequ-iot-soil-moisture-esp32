@@ -23,6 +23,10 @@ class Config:
         self.E5_LOWPOWER = 0
         self.E5_CONFIGURED = 0
         self.SENSORS = [1,2,3]
+        self.LORAWAN = 1
+        self.WLAN = 0
+        self.SSID = ""
+        self.PW = ""
         
         
         # Read values from config-file
@@ -47,6 +51,10 @@ class Config:
             self.E5_LOWPOWER = settings["E5_LOWPOWER"]
             self.E5_CONFIGURED = settings["E5_CONFIGURED"]
             self.SENSORS = settings["SENSORS"]
+            self.LORAWAN = settings["LORAWAN"]
+            self.WLAN = settings["WLAN"]
+            self.SSID = settings["SSID"]
+            self.PW = settings["PW"]
        
             log.info("Config.read_config: Opening configuration file... OK")
             log.info("Config.read_config: Configuration: %s" % str(self.configuration))
@@ -75,6 +83,10 @@ class Config:
             settings["E5_LOWPOWER"] = self.E5_LOWPOWER
             settings["E5_CONFIGURED"] = self.E5_CONFIGURED
             settings["SENSORS"] = self.SENSORS
+            settings["LORAWAN"] = self.LORAWAN 
+            settings["WLAN"] = self.WLAN 
+            settings["SSID"] = self.SSID
+            settings["PW"] = self.PW
                         
             file.write(ujson.dumps(settings))         
             log.info("Config.update_config_file: Updating config file...OK")
@@ -113,7 +125,11 @@ class Config:
             "APPKEY":{"type":"text"},
             "E5_LOWPOWER":{"type":"enum","allowed":[0,1],"default":0},
             "E5_CONFIGURED":{"type":"enum","allowed":[0,1],"default":0},
-            "SENSORS":{"type":"text"}
+            "SENSORS":{"type":"text"},
+            "LORAWAN":{"type":"enum","allowed":[0,1],"default":1},
+            "WLAN":{"type":"enum","allowed":[0,1],"default":0},
+            "SSID":{"type":"text"},
+            "PW":{"type":"text"}, 
         }
         
         parameter_limits = limits[parameter]

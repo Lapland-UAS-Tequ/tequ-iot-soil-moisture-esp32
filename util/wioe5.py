@@ -3,6 +3,7 @@ from util.shared import cfg
 from machine import UART
 from machine import Pin
 import utime
+from util.shared import e32
 
 class WIOE5:
     def __init__(self):
@@ -93,6 +94,7 @@ class WIOE5:
                 return True 
             else:
                 log.info("WIOE5.join: Trying to join...")       
+                e32.blink_user_led(0.500,1)
 
     def send_data(self, data):
         self.send_command("AT+CMSGHEX="+data)

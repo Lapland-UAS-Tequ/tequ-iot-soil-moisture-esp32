@@ -12,8 +12,10 @@ from struct import pack,unpack
 class ESP32Tools:
     def __init__(self):  
         self.user_led = machine.Pin(21,Pin.OUT)
-        self.pwr_led = machine.Pin(9,Pin.OUT)
-   
+        self.pwr_led = machine.Pin(9, Pin.OUT, value=0, hold=True)
+        log.info("ESP32Tools.init: Enable gpio_deep_sleep_hold...")
+        esp32.gpio_deep_sleep_hold(True)
+           
     def blink_user_led(self, interval, times):       
         initial_state = self.user_led()
         for x in range(times):
@@ -26,10 +28,10 @@ class ESP32Tools:
         self.user_led(initial_state) 
             
     def set_user_led_on(self): 
-        self.user_led(1)
+        self.user_led(0)
    
     def set_user_led_off(self): 
-        self.user_led(0)
+        self.user_led(1)
     
     def toggle_user_led(self): 
         self.user_led.toggle()
@@ -77,14 +79,20 @@ class ESP32Tools:
             log.info("Starting in %d seconds..." % count)
             count = count - 1
             utime.sleep(1)
-            self.blink_user_led(0.050,1)
+            self.blink_user_led(0.100,1)
 
     def local_ts(self):
         ts = utime.localtime()
         return "%02d-%02d-%02d %02d:%02d:%02d" % (ts[0], ts[1], ts[2], ts[3], ts[4], ts[5])
           
-    def pwr_control(self,value):
-        self.pwr_led(value)           
+    def pwr_control(self,new_value):
+        self.pwr_led = Pin(9, value=new_value,hold=True)
+        
+    def set_pwr_control_pin_hold(self):
+        #log.info("ESP32Tools.set_pwr_control_pin_hold: Reconfigure pin...")
+        #self.pwr_led = machine.Pin(9,Pin.OUT, value=0, hold=True)
+        log.info("ESP32Tools.init: Enable gpio_deep_sleep_hold...")
+        esp32.gpio_deep_sleep_hold(True)
         
     def packBatteryVoltage(self, value):
         #Map battery voltage 2000-3500 to range 0-255 with offset
