@@ -13,7 +13,7 @@ import gc
 gc.enable()
 
 e32.user_led(1)
-e32.start_counter(3)
+#e32.start_counter(3)
 
 if cfg.LORAWAN:
     log.info("Main - LoRaWAN is enabled.")
@@ -35,9 +35,13 @@ try:
     log.info("Main - Soil moisture app version [2024-12-05] starting...")
     results = bt.ble_scan()
     print(results)
+    if cfg.WLAN:
+        wlan = network.WLAN(network.WLAN.IF_STA)
+        wlan.active(True)
+        wlan.connect(cfg.SSID, cfg.PW)
     log.info("Main - Turn on RS485 sensors...")
     e32.pwr_control(1)
-    utime.sleep(0.5)
+    #utime.sleep(0.5)
     data = mb.read_all_sensors()
     log.info(data)
     e32.pwr_control(0)
@@ -60,30 +64,31 @@ try:
     payload_hex = payload_bytes.hex()
 
     if cfg.WLAN:
-        wlan = network.WLAN(network.WLAN.IF_STA)
-        wlan.active(True)
-        wlan.connect(cfg.SSID, cfg.PW)
-        while not wlan.isconnected():
-            log.info("Main - WLAN: Trying to connect...")       
-            e32.blink_user_led(0.500,1)
-        
-        user_headers = {
-             "content-type": 'application/json',
-             "x-meta-id":unique_id().hex(),
-             "x-meta-type":"esp32"
-        }
-        
-        post_data = ujson.dumps({ "data": payload_hex})
-        request_url = 'https://data.tequ.fi/' + 'api/soilmoisture'
-        res = requests.post(request_url, headers=user_headers, data = post_data)
-        
-        if res.status_code == 200:
-            e32.blink_user_led(0.050,10)
-            log.info("Sending data...OK")
-        else:
-            log.info("Sending data...FAILED")    
-       
-        wlan.active(False)
+        try:
+            while not wlan.isconnected():
+                log.info("Main - WLAN: Trying to connect...")       
+                e32.blink_user_led(0.250,1)
+            
+            log.info("WLAN config: "+ str(wlan.ifconfig()))   
+            user_headers = {
+                 "content-type": 'application/json',
+                 "x-meta-id":unique_id().hex(),
+                 "x-meta-type":"esp32"
+            }
+            
+            post_data = ujson.dumps({ "data": payload_hex})
+            request_url = 'https://data.tequ.fi/' + 'api/soilmoisture'
+            res = requests.post(request_url, headers=user_headers, data = post_data, timeout=5)
+            
+            if res.status_code == 200:
+                e32.blink_user_led(0.020,10)
+                log.info("Sending data...OK")
+            else:
+                log.info("Sending data...FAILED")
+        except:
+            log.error("Main - Wifi send - Exception",e)    
+        finally:
+            wlan.active(False)
         
     if cfg.LORAWAN:
         if cfg.E5_LOWPOWER:
@@ -135,4 +140,4 @@ finally:
     diff = utime.ticks_diff(end, start) / 1000
     log.info("Executing program took %.3f s" % diff)
     log.info("Go to deepsleep for %d seconds..." % int(cfg.SLEEPTIME/1000))
-    deepsleep(cfg.SLEEPTIME )
+    deepsleep(cfg.SLEEPTIME)

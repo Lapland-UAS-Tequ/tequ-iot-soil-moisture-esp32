@@ -58,12 +58,14 @@ class BLEScanner:
         return self.results
 
     def ble_scan(self):
-        self.enable_ble()
-        self.results = {}
-        log.info("BLEScanner.ble_scan: Scanning for BLE advertisers for %.2f seconds..." % (cfg.BLE_TO/1000))
-        self.scanner = self.ble.gap_scan(cfg.BLE_TO, cfg.BLE_IUS, cfg.BLE_WUS)
-        utime.sleep(int(cfg.BLE_TO/1000))    
-        self.stop_scanning()
-        self.disable_ble()
-        return self.results
+        try:
+            self.enable_ble()
+            self.results = {}
+            log.info("BLEScanner.ble_scan: Scanning for BLE advertisers for %.2f seconds..." % (cfg.BLE_TO/1000))
+            self.scanner = self.ble.gap_scan(cfg.BLE_TO, cfg.BLE_IUS, cfg.BLE_WUS)
+            utime.sleep(int(cfg.BLE_TO/1000))    
+            self.stop_scanning()
+        finally:
+            self.disable_ble()
+            return self.results        
     
