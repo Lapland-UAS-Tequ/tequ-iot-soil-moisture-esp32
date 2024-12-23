@@ -24,6 +24,11 @@ if cfg.WLAN:
     import network
     import urequests as requests   
 
+if cfg.BLE:
+    log.info("Main - BLE is enabled.")
+    from ble.advertise import BLEAdvertise
+    bt_adv = BLEAdvertise()
+
 if cfg.WDT_ON:
     log.info("Boot - WDT enabled. WDT_TIMEOUT: %d seconds" % (cfg.WDT_TO/1000))
     from machine import WDT
@@ -33,8 +38,8 @@ log.info("Boot - Program starting after %s" % e32.check_reset_cause())
 
 try:
     log.info("Main - Soil moisture app version [2024-12-05] starting...")
-    results = bt.ble_scan()
-    print(results)
+    #results = bt.ble_scan()
+    #print(results)
     if cfg.WLAN:
         wlan = network.WLAN(network.WLAN.IF_STA)
         wlan.active(True)
@@ -46,7 +51,6 @@ try:
     log.info(data)
     e32.pwr_control(0)
 
-    dp_id = e32.packId(9)
     import random
     out_t = e32.packTemperature(random.randrange(-40,80))
     out_rh = e32.packHumidity(random.randrange(0,100))
@@ -59,10 +63,16 @@ try:
     soil_t2 = e32.packTemperature(random.randrange(-40,80))
     soil_rh2 = e32.packHumidity(random.randrange(0,100))
     soil_t3 = e32.packTemperature(random.randrange(-40,80))
-    soil_rh3 =  e32.packHumidity(random.randrange(0,100))          
-    payload_bytes = dp_id+out_t+out_rh+out_bat+in_t+in_rh+in_bat+soil_t1+soil_rh1+soil_t2+soil_rh2+soil_t3+soil_rh3
+    soil_rh3 =  e32.packHumidity(random.randrange(0,100))
+    ble_payload1_bytes = e32.packId(1)+soil_t1+soil_rh1
+    ble_payload2_bytes = e32.packId(2)+soil_t2+soil_rh2
+    ble_payload3_bytes = e32.packId(3)+soil_t3+soil_rh3
+    
+    tot_bytes = ble_payload1_bytes+ble_payload2_bytes+ble_payload3_bytes
+    #payload_bytes = dp_id+soil_t1+soil_rh1
+    payload_bytes = soil_t1+soil_rh1+soil_t2+soil_rh2+soil_t3+soil_rh3
     payload_hex = payload_bytes.hex()
-
+ 
     if cfg.WLAN:
         try:
             while not wlan.isconnected():
@@ -85,11 +95,19 @@ try:
                 log.info("Sending data...OK")
             else:
                 log.info("Sending data...FAILED")
-        except:
+        except Exception as e:
             log.error("Main - Wifi send - Exception",e)    
         finally:
             wlan.active(False)
-        
+       
+    if cfg.BLE:
+        bt_adv.advertiseOnce(25000,"test",tot_bytes,1)
+        #bt_adv.advertiseOnce(25000,tot_bytes,1)
+        #bt_adv.advertiseOnce(25000,tot_bytes,1)
+        #bt_adv.advertiseOnce(25000,bytearray(ble_payload1_bytes),1)
+        #bt_adv.advertiseOnce(25000,ble_payload2_bytes,1)
+        #bt_adv.advertiseOnce(25000,ble_payload3_bytes,1)
+
     if cfg.LORAWAN:
         if cfg.E5_LOWPOWER:
             log.info("Main - WIO E5 module Auto low power is enabled.")
@@ -140,4 +158,4 @@ finally:
     diff = utime.ticks_diff(end, start) / 1000
     log.info("Executing program took %.3f s" % diff)
     log.info("Go to deepsleep for %d seconds..." % int(cfg.SLEEPTIME/1000))
-    deepsleep(cfg.SLEEPTIME)
+    #deepsleep(cfg.SLEEPTIME)

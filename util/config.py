@@ -10,6 +10,7 @@ class Config:
         # Default values
         self.SLEEPTIME = 3600
         self.DATA_PATH = ""
+        self.BLE = 1
         self.BLE_TO = 5500
         self.BLE_IUS = 50000
         self.BLE_WUS = 50000
@@ -39,6 +40,7 @@ class Config:
             
             self.configuration = settings
             self.SLEEPTIME = settings['SLEEPTIME']
+            self.BLE = settings['BLE']
             self.BLE_TO = settings['BLE_TO']
             self.BLE_IUS = settings['BLE_IUS']
             self.BLE_WUS = settings['BLE_WUS']
@@ -71,6 +73,7 @@ class Config:
             
             settings = {}
             settings['SLEEPTIME'] = self.SLEEPTIME
+            settings['BLE'] = self.BLE
             settings['BLE_TO'] = self.BLE_TO
             settings['BLE_IUS'] = self.BLE_IUS
             settings['BLE_WUS'] = self.BLE_WUS          
@@ -114,6 +117,7 @@ class Config:
     
     def check_parameter_validity(self,parameter,value):
         limits = {            
+            "BLE":{"type":"enum","allowed":[0,1],"default":1},
             "BLE_TO":{"type":"int","low":1000,"high":15000},
             "BLE_IUS":{"type":"int","low":10000,"high":100000},
             "BLE_WUS":{"type":"int","low":10000,"high":100000},
