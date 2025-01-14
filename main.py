@@ -1,3 +1,5 @@
+import utime
+start = utime.ticks_ms()
 from util.shared import log
 from util.shared import cfg
 from util.shared import e32
@@ -6,14 +8,11 @@ from util.shared import mb
 from machine import deepsleep
 from machine import unique_id
 from sys import print_exception
-import utime
-start = utime.ticks_ms()
 import ujson
 import gc
 gc.enable()
 
 e32.user_led(1)
-#e32.start_counter(3)
 
 if cfg.LORAWAN:
     log.info("Main - LoRaWAN is enabled.")
@@ -37,39 +36,25 @@ if cfg.WDT_ON:
 log.info("Boot - Program starting after %s" % e32.check_reset_cause())
 
 try:
-    log.info("Main - Soil moisture app version [2024-12-05] starting...")
-    #results = bt.ble_scan()
-    #print(results)
+    log.info("Main - Soil moisture app version [2025-01-07] starting...")
     if cfg.WLAN:
         wlan = network.WLAN(network.WLAN.IF_STA)
         wlan.active(True)
         wlan.connect(cfg.SSID, cfg.PW)
     log.info("Main - Turn on RS485 sensors...")
     e32.pwr_control(1)
-    #utime.sleep(0.5)
+    utime.sleep(0.500)
     data = mb.read_all_sensors()
     log.info(data)
     e32.pwr_control(0)
 
     import random
-    out_t = e32.packTemperature(random.randrange(-40,80))
-    out_rh = e32.packHumidity(random.randrange(0,100))
-    out_bat = e32.packBatteryVoltage(random.randrange(2000,3500))
-    in_t = e32.packTemperature(random.randrange(-40,80))
-    in_rh = e32.packHumidity(random.randrange(0,100))
-    in_bat = e32.packBatteryVoltage(random.randrange(2000,3500))
-    soil_t1 = e32.packTemperature(random.randrange(-40,80))
-    soil_rh1 = e32.packHumidity(random.randrange(0,100))
-    soil_t2 = e32.packTemperature(random.randrange(-40,80))
-    soil_rh2 = e32.packHumidity(random.randrange(0,100))
-    soil_t3 = e32.packTemperature(random.randrange(-40,80))
-    soil_rh3 =  e32.packHumidity(random.randrange(0,100))
-    ble_payload1_bytes = e32.packId(1)+soil_t1+soil_rh1
-    ble_payload2_bytes = e32.packId(2)+soil_t2+soil_rh2
-    ble_payload3_bytes = e32.packId(3)+soil_t3+soil_rh3
-    
-    tot_bytes = ble_payload1_bytes+ble_payload2_bytes+ble_payload3_bytes
-    #payload_bytes = dp_id+soil_t1+soil_rh1
+    soil_t1 = e32.packTemperature(data[11]['t'])
+    soil_rh1 = e32.packHumidity(data[11]['h'])
+    soil_t2 = e32.packTemperature(data[12]['t'])
+    soil_rh2 = e32.packHumidity(data[12]['h'])
+    soil_t3 = e32.packTemperature(data[13]['t'])
+    soil_rh3 =  e32.packHumidity(data[13]['h'])
     payload_bytes = soil_t1+soil_rh1+soil_t2+soil_rh2+soil_t3+soil_rh3
     payload_hex = payload_bytes.hex()
  
@@ -101,12 +86,8 @@ try:
             wlan.active(False)
        
     if cfg.BLE:
-        bt_adv.advertiseOnce(25000,"test",tot_bytes,1)
-        #bt_adv.advertiseOnce(25000,tot_bytes,1)
-        #bt_adv.advertiseOnce(25000,tot_bytes,1)
-        #bt_adv.advertiseOnce(25000,bytearray(ble_payload1_bytes),1)
-        #bt_adv.advertiseOnce(25000,ble_payload2_bytes,1)
-        #bt_adv.advertiseOnce(25000,ble_payload3_bytes,1)
+        bt_adv.advertiseOnce(500,25000,"soil",payload_bytes,1)
+        e32.blink_user_led(0.025,10)
 
     if cfg.LORAWAN:
         if cfg.E5_LOWPOWER:
@@ -158,4 +139,4 @@ finally:
     diff = utime.ticks_diff(end, start) / 1000
     log.info("Executing program took %.3f s" % diff)
     log.info("Go to deepsleep for %d seconds..." % int(cfg.SLEEPTIME/1000))
-    #deepsleep(cfg.SLEEPTIME)
+    deepsleep(cfg.SLEEPTIME)

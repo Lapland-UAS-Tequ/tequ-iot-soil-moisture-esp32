@@ -15,14 +15,12 @@ class RS485Soil:
         try:
             log.info("RS485Soil.read_single_sensor_data: MB_ID: %d" % sensor_id)
             registers = bytes(self.mb.read_holding_registers(sensor_id, 0x0, 2, True))        
-            rh_b = registers[0:1]
-            rh = struct.unpack(">H", registers[0:1])[0] * 0.1
-            t_b = registers[1:2]
-            t = struct.unpack(">H", registers[1:2])[0] * 0.1
-            return {"sid":sensor_id,"data":{"rh":rh,"t":t, "rh_b":rh_b,"t_B":t_b}}
+            h = struct.unpack(">H", registers[0:2])[0] * 0.1
+            t = struct.unpack(">H", registers[2:4])[0] * 0.1
+            return {"sid":sensor_id,"data":{"h":h,"t":t}}
         except Exception as e:
             log.error("RS485Soil.read_single_sensor_data",e)
-            return {"sid":sensor_id,"data":{"rh":None,"t":None, "rh_b":None,"t_b":None}}
+            return {"sid":sensor_id,"data":{"h":None,"t":None}}
        
     def read_all_sensors(self):
         data = {}

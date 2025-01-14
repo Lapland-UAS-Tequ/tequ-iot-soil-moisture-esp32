@@ -65,11 +65,11 @@ class BLEAdvertise:
     def stopAdvertise(self):
         self.ble.gap_advertise(None)
 
-    def advertiseOnce(self, advertise_interval_us, name, data, datapacket_id):
+    def advertiseOnce(self, sleep_time_ms, advertise_interval_us, name, data, datapacket_id):
         try:
             self.enable_ble()
             self.advertise(advertise_interval_us, name, data, datapacket_id)
-            utime.sleep_ms(5)
+            utime.sleep_ms(sleep_time_ms)
             self.stopAdvertise()
         except Exception as e:
             log.error("BLEAdvertise.advertise: - Exception",e)    
