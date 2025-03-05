@@ -36,7 +36,7 @@ if cfg.WDT_ON:
 log.info("Boot - Program starting after %s" % e32.check_reset_cause())
 
 try:
-    log.info("Main - Soil moisture app version [2025-01-07] starting...")
+    log.info("Main - Soil moisture app version [2025-02-14] starting...")
     if cfg.WLAN:
         wlan = network.WLAN(network.WLAN.IF_STA)
         wlan.active(True)
@@ -55,7 +55,8 @@ try:
     soil_rh2 = e32.packHumidity(data[12]['h'])
     soil_t3 = e32.packTemperature(data[13]['t'])
     soil_rh3 =  e32.packHumidity(data[13]['h'])
-    payload_bytes = soil_t1+soil_rh1+soil_t2+soil_rh2+soil_t3+soil_rh3
+    bat_voltage = e32.packESP32BatteryVoltage(e32.read_battery_voltage())
+    payload_bytes = soil_t1+soil_rh1+soil_t2+soil_rh2+soil_t3+soil_rh3+bat_voltage
     payload_hex = payload_bytes.hex()
  
     if cfg.WLAN:
@@ -139,4 +140,5 @@ finally:
     diff = utime.ticks_diff(end, start) / 1000
     log.info("Executing program took %.3f s" % diff)
     log.info("Go to deepsleep for %d seconds..." % int(cfg.SLEEPTIME/1000))
+    utime.sleep(0.5)
     deepsleep(cfg.SLEEPTIME)

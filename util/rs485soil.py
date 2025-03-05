@@ -8,7 +8,7 @@ import struct
 
 class RS485Soil:
     def __init__(self):      
-       self.mb = Serial(uart_id=2, baudrate=9600, data_bits=8, stop_bits=1, parity=None, tx=Pin(3), rx=Pin(4))
+       self.mb = Serial(uart_id=1, baudrate=9600, data_bits=8, stop_bits=1, parity=None, tx=Pin(2), rx=Pin(1))
        self.sensors = cfg.SENSORS
              
     def read_single_sensor_data(self, sensor_id):

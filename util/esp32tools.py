@@ -8,14 +8,17 @@ import gc
 from machine import reset_cause
 from machine import Pin
 from struct import pack,unpack
+from machine import ADC
+
 
 class ESP32Tools:
     def __init__(self):  
         self.user_led = machine.Pin(21,Pin.OUT)
-        self.pwr_led = machine.Pin(9, Pin.OUT, value=0, hold=True)
+        self.pwr_led = machine.Pin(7, Pin.OUT, value=0, hold=True)
+        self.bat_meas = ADC(Pin(8), atten=3)
         log.info("ESP32Tools.init: Enable gpio_deep_sleep_hold...")
         esp32.gpio_deep_sleep_hold(True)
-           
+    
     def blink_user_led(self, interval, times):       
         initial_state = self.user_led()
         for x in range(times):
@@ -86,18 +89,27 @@ class ESP32Tools:
         return "%02d-%02d-%02d %02d:%02d:%02d" % (ts[0], ts[1], ts[2], ts[3], ts[4], ts[5])
           
     def pwr_control(self,new_value):
-        self.pwr_led = Pin(9, value=new_value,hold=True)
+        self.pwr_led = Pin(7, value=new_value,hold=True)
+        #oli 9
         
     def set_pwr_control_pin_hold(self):
         #log.info("ESP32Tools.set_pwr_control_pin_hold: Reconfigure pin...")
         #self.pwr_led = machine.Pin(9,Pin.OUT, value=0, hold=True)
         log.info("ESP32Tools.init: Enable gpio_deep_sleep_hold...")
         esp32.gpio_deep_sleep_hold(True)
-        
+    
+    def read_battery_voltage(self):   
+        voltage = int(self.bat_meas.read_uv() / 1000 * 2) 
+        print("Battery voltage: %d" % voltage)
+        return voltage
+    
     def packBatteryVoltage(self, value):
         #Map battery voltage 2000-3500 to range 0-255 with offset
         return pack("B",int((value-2000)/(1500/255)))
     
+    def packESP32BatteryVoltage(self, value):
+        return pack("H",value)
+        
     def packTemperature(self, value):
         #Pack temperature to range -32768...+32767
         return pack("h",int(value*100))
