@@ -87,7 +87,11 @@ class ESP32Tools:
     def local_ts(self):
         ts = utime.localtime()
         return "%02d-%02d-%02d %02d:%02d:%02d" % (ts[0], ts[1], ts[2], ts[3], ts[4], ts[5])
-          
+    
+    def utc_ts(self):
+        ts = utime.localtime()
+        return "%02d-%02d-%02dT%02d:%02d:%02dZ" % (ts[0], ts[1], ts[2], ts[3], ts[4], ts[5])
+    
     def pwr_control(self,new_value):
         self.pwr_led = Pin(7, value=new_value,hold=True)
         #oli 9
