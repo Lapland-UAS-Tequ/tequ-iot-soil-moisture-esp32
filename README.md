@@ -9,6 +9,8 @@ Soil moisture measurement system. Collects data from Ruuvitag sensors and DFRobo
 
 System can send data using BLE or Wi-Fi connection.
 
+Javascript module to receive and forward BLE advertisement data is programmed for Shelly devices. Data is forwarded to local MQTT broker. Javascript module is ble-soilmoisture.js in repository files.
+
 System is designed to 6-12 months without need to change batteries.
 
 ## Hardware
