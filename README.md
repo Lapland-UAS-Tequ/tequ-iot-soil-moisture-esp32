@@ -31,11 +31,8 @@ https://www.mouser.fi/datasheet/2/177/1555f-1389823.pdf
 
 
 ## Schematic
-Connections of the hardware used in prototype.
 
-
-
-
+![Schematic](/electrocat.png)
 
 
 
