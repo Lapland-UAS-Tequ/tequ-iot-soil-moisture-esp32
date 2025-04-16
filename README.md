@@ -14,7 +14,7 @@ Javascript module to receive and forward BLE advertisement data is programmed fo
 System is designed to 6-12 months without need to change batteries.
 
 ## Hardware
-Hardware components are built on PCB designed for the project and PCB is placed in industrial IP68 rated enclosure. 
+Hardware components are built on PCB designed for the project and PCB is placed in industrial IP68 rated enclosure. PCB is developed using LibrePCB.
 
 Enclosure model is Hammond 1555EF17GY. 
 
@@ -30,12 +30,10 @@ https://www.mouser.fi/datasheet/2/177/1555f-1389823.pdf
 | Soil moisture sensor   | DFRobot       | Composter | <a href="https://wiki.dfrobot.com/RS485_Soil_Sensor_Temperature_Humidity_SKU_SEN0600">Link</a>|
 
 
-## Schematic
+## Schematics
+Wiring and connections.
 
 ![Soil moisture system schematics](/schematics.png)
-
-
-
 
 ## Development
 
