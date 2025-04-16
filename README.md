@@ -32,7 +32,7 @@ https://www.mouser.fi/datasheet/2/177/1555f-1389823.pdf
 
 ## Schematic
 
-![Schematic](/blob/main/XIAO_ESP32-S3_Soil_Moisture_Schematics.png)
+![Schematic](/XIAO_ESP32-S3_Soil_Moisture_Schematics.png)
 
 
 
