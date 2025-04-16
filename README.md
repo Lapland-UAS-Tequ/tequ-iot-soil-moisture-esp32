@@ -48,8 +48,6 @@ Wiring and connections.
 5. Update ESP32 Micropython using Thonny
 
 6. Clone this repository
-7. 
-You can clone the repository with the command:
 ```
 git clone https://github.com/Lapland-UAS-Tequ/tequ-iot-soil-moisture-esp32
 ```
