@@ -40,7 +40,6 @@ Connections of the hardware used in prototype.
 
 
 
-
 ## Development
 
 1. Install Thonny (https://thonny.org/)
@@ -52,6 +51,7 @@ Connections of the hardware used in prototype.
 5. Update ESP32 Micropython using Thonny
 
 6. Clone this repository
+7. 
 You can clone the repository with the command:
 ```
 git clone https://github.com/Lapland-UAS-Tequ/tequ-iot-soil-moisture-esp32
@@ -59,6 +59,7 @@ git clone https://github.com/Lapland-UAS-Tequ/tequ-iot-soil-moisture-esp32
 or by downloading and unzipping the repository.
 
 7. Create settings.json
+   
 In the repository you'll find template files. 
 
 8 Open folder in Thonny and upload files into device
