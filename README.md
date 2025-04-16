@@ -12,7 +12,7 @@ System can send data using BLE or Wi-Fi connection.
 System is designed to 6-12 months without need to change batteries.
 
 ## Hardware
-Hardware components are built on PCB and PCB is placed in industrial IP68 rated enclosure. 
+Hardware components are built on PCB designed for the project and PCB is placed in industrial IP68 rated enclosure. 
 
 Enclosure model is Hammond 1555EF17GY. 
 
