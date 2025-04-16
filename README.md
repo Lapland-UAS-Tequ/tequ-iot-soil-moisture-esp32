@@ -16,35 +16,19 @@ Hardware components are placed industrial IP68 rated enclosure.
 
 | Hardware               | Model         | Placement       | Link          |
 | -------------          |:-------------:| :-------------: | :-------------:|
-| Main board             | Seeed XIAO ESP32S3|  Enclosure     | <a href="https://docs.sixfab.com/docs/sixfab-pico-lte-introduction">Link</a>|
-| RS485 Module           | Grove - RS485     |    | <a href="https://wiki.seeedstudio.com/Grove-RS485">Link</a>|
-| DC/DC module           | Adafruit       |       | <a href="">Link</a>|
-| Battery pack           | 3.7 LiPo         |    | <a href="">Link</a>|
-| Soil moisture sensor   | DFRobot       |    | <a href="">Link</a>|
+| Main board             | Seeed XIAO ESP32S3 |  Enclosure     | <a href="https://docs.sixfab.com/docs/sixfab-pico-lte-introduction">Link</a>|
+| RS485 Module           | Grove - RS485     |  Enclosure  | <a href="https://wiki.seeedstudio.com/Grove-RS485">Link</a>|
+| DC/DC module           | Adafruit 4654     |  Enclosure     | <a href="https://www.adafruit.com/product/4654">Link</a>|
+| Battery pack           | 3.7 LiPo 2000 mAh        | Enclosure   | <a href="https://www.suomenakut.fi/akut-ja-paristot/li-polymer-akku-3-7v-2000mah-lp674261-cl-mitat61mm-x-42mm-x-6-1mm/p/100263116540011">Link</a>|
+| Soil moisture sensor   | DFRobot       | Composter | <a href="https://wiki.dfrobot.com/RS485_Soil_Sensor_Temperature_Humidity_SKU_SEN0600">Link</a>|
 
-* LoRAWAN module is optional.
 
-## Connections
+## Schematic
 Connections of the hardware used in prototype.
 
-| Device                 | PIN           | Device         | PIN            | 
-| -------------          |:-------------:| :-------------:| :-------------:|
-| Main board             | BAT+          | Battery pack   | Battery +      |
-| Main board             | BAT-          | Battery pack   | Battery -      |
-| DC/DC module           | VIN           | Battery pack   | Battery +      |
-| DC/DC module           | GND           | Battery pack   | Battery - (GND)|
-| DC/DC module           | EN            | Main board     | GPIO9 (D10)    |
-| RS485 module           | GND           | Battery pack   | GND            |
-| RS485 module           | VCC           | DC/DC module   | 5V             |
-| RS485 module           | UART TX       | Main board     | GPIO3 (D2)     |
-| RS485 module           | UART RX       | Main board     | GPIO4 (D3)     |
-| Soil sensor 1,2,3      | GND           | Battery pack   | GND            |
-| Soil sensor 1,2,3      | VIN           | DC/DC module   | 5V             |
-| Soil sensor 1,2,3      | GND           | RS485 module   | RS485 TX       |
-| Soil sensor 1,2,3      | GND           | RS485 module   | RS485 RX       |
 
 
-Connection schematic:
+
 
 
 
