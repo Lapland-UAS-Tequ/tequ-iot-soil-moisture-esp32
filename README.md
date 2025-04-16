@@ -5,13 +5,15 @@ https://lapinamk.fi/hanke/kuituhamppu-kayttoon/
 ------------------------------------------------------------------------------------
 
 # tequ-iot-soil-moisture-esp32
-Soil moisture measurement system. Collects data from Ruuvitag sensors and DFRobot soil moisture sensors. In this project system is used to measure biomass temperature and moisture from three different locations (bottom, middle and top). Biomass is located in compost unit. 
+Soil moisture measurement system. Collects data from DFRobot soil moisture sensors. In this project system is used to measure biomass temperature and moisture from three different locations (bottom, middle and top). Biomass is located in compost unit. 
 
 System can send data using BLE or Wi-Fi connection.
 
 Javascript module to receive and forward BLE advertisement data is programmed for Shelly devices. Data is forwarded to local MQTT broker. Javascript module is ble-soilmoisture.js in repository files.
 
 System is designed to 6-12 months without need to change batteries.
+
+System can be expanded to collect data from Ruuvitags and use LoRaWAN to send data. This functionality is programmed, but not fully tested and connections for LoRaWAN is not directly available on current PCB.
 
 ## Hardware
 Hardware components are built on PCB designed for the project and PCB is placed in industrial IP68 rated enclosure. PCB is developed using LibrePCB.
