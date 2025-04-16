@@ -73,7 +73,7 @@ try:
             }
             
             post_data = ujson.dumps({ "data": payload_hex})
-            request_url = 'https://data.tequ.fi/' + 'api/soilmoisture'
+            request_url = 'http://192.168.2.108:1880/' + 'api/soilmoisture'
             res = requests.post(request_url, headers=user_headers, data = post_data, timeout=5)
             
             if res.status_code == 200:
