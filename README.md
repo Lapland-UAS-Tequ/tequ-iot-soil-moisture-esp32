@@ -51,12 +51,11 @@ Wiring and connections.
 ```
 git clone https://github.com/Lapland-UAS-Tequ/tequ-iot-soil-moisture-esp32
 ```
-or by downloading and unzipping the repository.
 
 7. Create settings.json
    
-In the repository you'll find template files. 
+ In the repository you'll find template files. 
 
-8 Open folder in Thonny and upload files into device
+8. Open folder in Thonny and upload files into device
  
 9. Run project and verify operation
